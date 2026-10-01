@@ -1,0 +1,80 @@
+# Telco Churn Prediction Configuration
+
+project:
+  name: "telco-customer-churn"
+  version: "1.0.0"
+  description: "End-to-end Machine Learning System for Telco Customer Churn Prediction & Retention Optimization"
+  seed: 42
+
+paths:
+  raw_data_dir: "data/raw"
+  raw_data_file: "data/raw/telco_churn.csv"
+  processed_data_dir: "data/processed"
+  train_data_file: "data/processed/train.csv"
+  test_data_file: "data/processed/test.csv"
+  model_dir: "models"
+  model_pipeline_file: "models/churn_pipeline.joblib"
+  metrics_file: "models/metrics.json"
+  feature_importance_file: "models/feature_importance.json"
+  drift_baseline_file: "models/drift_baseline.json"
+  logs_dir: "logs"
+
+data:
+  source_url: "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv"
+  test_size: 0.2
+  target_column: "Churn"
+  id_column: "customerID"
+  
+  numeric_features:
+    - "tenure"
+    - "MonthlyCharges"
+    - "TotalCharges"
+  
+  categorical_features:
+    - "gender"
+    - "SeniorCitizen"
+    - "Partner"
+    - "Dependents"
+    - "PhoneService"
+    - "MultipleLines"
+    - "InternetService"
+    - "OnlineSecurity"
+    - "OnlineBackup"
+    - "DeviceProtection"
+    - "TechSupport"
+    - "StreamingTV"
+    - "StreamingMovies"
+    - "Contract"
+    - "PaperlessBilling"
+    - "PaymentMethod"
+
+models:
+  primary_metric: "roc_auc"
+  cv_folds: 5
+  candidates:
+    logistic_regression:
+      enabled: true
+      params:
+        C: [0.01, 0.1, 1.0, 10.0]
+        penalty: ["l2"]
+        solver: ["lbfgs"]
+        max_iter: [1000]
+    random_forest:
+      enabled: true
+      params:
+        n_estimators: [50, 100, 200]
+        max_depth: [5, 8, 12]
+        min_samples_split: [2, 5]
+    xgboost:
+      enabled: true
+      params:
+        n_estimators: [50, 100, 200]
+        max_depth: [3, 5, 7]
+        learning_rate: [0.01, 0.05, 0.1]
+        subsample: [0.8, 1.0]
+
+business_economics:
+  default_threshold: 0.5
+  customer_lifetime_value: 400.0   # Average customer value if saved ($)
+  retention_cost: 50.0            # Cost to offer retention incentives ($)
+  retention_success_rate: 0.40    # Percentage of targeted churners who accept offer and stay

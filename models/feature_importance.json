@@ -1,0 +1,182 @@
+[
+  {
+    "feature": "Contract_Month-to-month",
+    "importance": 0.25922,
+    "relative_pct": 25.92,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "OnlineSecurity_No",
+    "importance": 0.08466,
+    "relative_pct": 8.47,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "InternetService_Fiber optic",
+    "importance": 0.05818,
+    "relative_pct": 5.82,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "tenure_group_0-12m",
+    "importance": 0.05488,
+    "relative_pct": 5.49,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "Contract_Two year",
+    "importance": 0.05347,
+    "relative_pct": 5.35,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "TechSupport_No",
+    "importance": 0.0457,
+    "relative_pct": 4.57,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "InternetService_DSL",
+    "importance": 0.03559,
+    "relative_pct": 3.56,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "Contract_One year",
+    "importance": 0.03554,
+    "relative_pct": 3.55,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "InternetService_No",
+    "importance": 0.02058,
+    "relative_pct": 2.06,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "monthly_to_total_ratio",
+    "importance": 0.01974,
+    "relative_pct": 1.97,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "StreamingMovies_Yes",
+    "importance": 0.01688,
+    "relative_pct": 1.69,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "PaymentMethod_Electronic check",
+    "importance": 0.01651,
+    "relative_pct": 1.65,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "is_automatic_payment_1",
+    "importance": 0.0144,
+    "relative_pct": 1.44,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "TechSupport_Yes",
+    "importance": 0.01427,
+    "relative_pct": 1.43,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "StreamingTV_No",
+    "importance": 0.01384,
+    "relative_pct": 1.38,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "streaming_services_count",
+    "importance": 0.01299,
+    "relative_pct": 1.3,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "tenure",
+    "importance": 0.01193,
+    "relative_pct": 1.19,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "PhoneService_Yes",
+    "importance": 0.01122,
+    "relative_pct": 1.12,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "PaperlessBilling_No",
+    "importance": 0.01068,
+    "relative_pct": 1.07,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "MultipleLines_Yes",
+    "importance": 0.01042,
+    "relative_pct": 1.04,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "StreamingTV_Yes",
+    "importance": 0.01028,
+    "relative_pct": 1.03,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "MonthlyCharges",
+    "importance": 0.00996,
+    "relative_pct": 1.0,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "PhoneService_No",
+    "importance": 0.00868,
+    "relative_pct": 0.87,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "TotalCharges",
+    "importance": 0.00824,
+    "relative_pct": 0.82,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "MultipleLines_No",
+    "importance": 0.00819,
+    "relative_pct": 0.82,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "security_services_count",
+    "importance": 0.00816,
+    "relative_pct": 0.82,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "OnlineBackup_No",
+    "importance": 0.00816,
+    "relative_pct": 0.82,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "has_family_0",
+    "importance": 0.00807,
+    "relative_pct": 0.81,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "DeviceProtection_No",
+    "importance": 0.00795,
+    "relative_pct": 0.8,
+    "metric_type": "feature_importance"
+  },
+  {
+    "feature": "is_automatic_payment_0",
+    "importance": 0.00748,
+    "relative_pct": 0.75,
+    "metric_type": "feature_importance"
+  }
+]
