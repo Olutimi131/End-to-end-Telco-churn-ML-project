@@ -103,9 +103,21 @@ st.sidebar.title("Telco Intelligence")
 st.sidebar.markdown("**Production ML Churn System**")
 
 if model_ready:
-    opt_th = metrics_data.get("optimal_threshold_metrics", {}).get("optimal_threshold", 0.47)
-    auc_score = metrics_data.get("metrics", {}).get("roc_auc", 0.8447)
-    best_model_name = metrics_data.get("model_name", "xgboost").upper()
+    opt_metrics = {}
+    metrics_summary = {}
+    best_model_name = "xgboost"
+    if isinstance(metrics_data, dict):
+        opt_metrics = metrics_data.get("optimal_threshold_metrics", {})
+        metrics_summary = metrics_data.get("metrics", {})
+        best_model_name = metrics_data.get("model_name", "xgboost")
+    elif isinstance(metrics_data, list) and len(metrics_data) > 0 and isinstance(metrics_data[0], dict):
+        opt_metrics = metrics_data[0].get("optimal_threshold_metrics", {})
+        metrics_summary = metrics_data[0].get("metrics", {})
+        best_model_name = metrics_data[0].get("model_name", "xgboost")
+
+    opt_th = opt_metrics.get("optimal_threshold", 0.47)
+    auc_score = metrics_summary.get("roc_auc", 0.8447)
+    best_model_name = best_model_name.upper()
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🏆 Active Model")
@@ -340,7 +352,11 @@ with tab_analytics:
     st.markdown('<div class="sub-header">Evaluation benchmarks, confusion matrix, and global feature importance.</div>', unsafe_allow_html=True)
 
     if model_ready and metrics_data:
-        metrics = metrics_data.get("metrics", {})
+        metrics = {}
+        if isinstance(metrics_data, dict):
+            metrics = metrics_data.get("metrics", {})
+        elif isinstance(metrics_data, list) and len(metrics_data) > 0 and isinstance(metrics_data[0], dict):
+            metrics = metrics_data[0].get("metrics", {})
 
         c1, c2, c3, c4, c5, c6 = st.columns(6)
         c1.metric("ROC-AUC", f"{metrics.get('roc_auc', 0):.4f}")
@@ -355,7 +371,31 @@ with tab_analytics:
 
         with gcol1:
             st.markdown("#### 🎯 Confusion Matrix (Test Set)")
-            cm_data = metrics_data.get("confusion_matrix", {}).get("matrix", [[0, 0], [0, 0]])
+            cm_entry = None
+            if isinstance(metrics_data, list):
+                if metrics_data and all(isinstance(r, list) for r in metrics_data):
+                    cm_entry = metrics_data
+                else:
+                    # Safely iterate or index metrics_data as a list
+                    for item in metrics_data:
+                        if isinstance(item, dict):
+                            cm_entry = item.get("confusion_matrix") or item.get("matrix")
+                            if cm_entry is not None:
+                                break
+                    if cm_entry is None and len(metrics_data) > 0:
+                        first_item = metrics_data[0]
+                        if isinstance(first_item, dict):
+                            cm_entry = first_item.get("confusion_matrix") or first_item.get("matrix")
+            elif isinstance(metrics_data, dict):
+                cm_entry = metrics_data.get("confusion_matrix") or metrics_data.get("matrix")
+
+            if isinstance(cm_entry, dict):
+                cm_data = cm_entry.get("matrix", [[0, 0], [0, 0]])
+            elif isinstance(cm_entry, list):
+                cm_data = cm_entry
+            else:
+                cm_data = [[0, 0], [0, 0]]
+
             fig, ax = plt.subplots(figsize=(5, 4))
             sns.heatmap(
                 cm_data,
@@ -372,7 +412,17 @@ with tab_analytics:
 
         with gcol2:
             st.markdown("#### 📈 ROC & PR Curves")
-            roc_pts = pd.DataFrame(metrics_data.get("roc_curve", []))
+            roc_list = []
+            if isinstance(metrics_data, dict):
+                roc_list = metrics_data.get("roc_curve", [])
+            elif isinstance(metrics_data, list):
+                for item in metrics_data:
+                    if isinstance(item, dict) and "roc_curve" in item:
+                        roc_list = item.get("roc_curve", [])
+                        break
+                if not roc_list and len(metrics_data) > 0 and isinstance(metrics_data[0], dict):
+                    roc_list = metrics_data[0].get("roc_curve", [])
+            roc_pts = pd.DataFrame(roc_list)
             if not roc_pts.empty:
                 fig, ax = plt.subplots(figsize=(6, 4))
                 ax.plot(roc_pts["fpr"], roc_pts["tpr"], color="#2563EB", lw=2, label=f"ROC (AUC = {metrics.get('roc_auc', 0):.3f})")
@@ -435,8 +485,14 @@ with tab_simulator:
         blanket_net_profit = blanket_value_saved - blanket_cost
 
         # Strategy 3: ML Targeted Campaign (Using model precision & recall at optimal threshold)
-        opt_prec = metrics_data.get("optimal_threshold_metrics", {}).get("precision_at_optimal", 0.58)
-        opt_rec = metrics_data.get("optimal_threshold_metrics", {}).get("recall_at_optimal", 0.72)
+        opt_metrics = {}
+        if isinstance(metrics_data, dict):
+            opt_metrics = metrics_data.get("optimal_threshold_metrics", {})
+        elif isinstance(metrics_data, list) and len(metrics_data) > 0 and isinstance(metrics_data[0], dict):
+            opt_metrics = metrics_data[0].get("optimal_threshold_metrics", {})
+
+        opt_prec = opt_metrics.get("precision_at_optimal", 0.58)
+        opt_rec = opt_metrics.get("recall_at_optimal", 0.72)
 
         ml_targeted_churners = int(actual_churners * opt_rec)
         ml_false_positives = int(ml_targeted_churners * (1 - opt_prec) / max(opt_prec, 0.01))

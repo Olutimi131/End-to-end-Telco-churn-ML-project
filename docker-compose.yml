@@ -11,7 +11,7 @@ services:
     volumes:
       - ./models:/app/models
       - ./data:/app/data
-    command: ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./models:/app/models
       - ./data:/app/data
-    command: ["streamlit", "run", "dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    command: ["streamlit", "run", "app/ui.py", "--server.port=8501", "--server.address=0.0.0.0"]
     depends_on:
       - api
     restart: unless-stopped
