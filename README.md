@@ -30,24 +30,6 @@ Models were evaluated using 5-fold Stratified Cross-Validation on 5,634 training
 | Logistic Regression | 0.8453 | 0.8410 | 0.6480 | 0.6215 | Baseline |
 
 
-## 🐳 Docker & Docker Compose
-
-Deploy the API and Streamlit dashboard simultaneously in isolated containers:
-
-```bash
-# Build and run both services
-docker compose up --build
-
-# Run in background (detached mode)
-docker compose up -d
-```
-
-- API container runs on port `8000`
-- Streamlit dashboard container runs on port `8501`
-
-
----
-
 ## 📄 License
 
 This project is licensed under the Apache 2.0 License.
